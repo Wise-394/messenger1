@@ -42,8 +42,33 @@ html {
     padding: 10px;
 }
 
-/* Style the send button */
 #send_button {
     border-radius: 20px;
     padding: 10px 20px;
 }
+/**MOBILE FRIENDLY=====================================================**/
+ .users-column {
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 991.98px) {
+            .users-column {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 300px;
+                height: 100vh;
+                background: white;
+                z-index: 1050;
+                padding: 1rem;
+                overflow-y: auto;
+            }
+            .users-column.show {
+                right: 0;
+            }
+            .hamburger-btn {
+                position: fixed;
+                right: 5px;
+                top: 300px;
+                z-index: 1051;
+            }
+        }

@@ -18,9 +18,10 @@ session_start();
     <div class="min-vh-100 d-flex flex-row">
 
         <!-- LEFT COLUMN ======================================= -->
-        <div class="col-4 p-4 border-end">
+        <div class="col-4 p-4 border-end d-none d-lg-block">
         </div>
 
+        <!-- MIDDLE COLUMN ======================================= -->
         <div class="col-12 col-md-6 col-lg-4 p-3 d-flex flex-column min-vh-100 border-end">
             <div class="d-flex flex-column min-vh-100">
                 <!-- MSG TOP ROW ======================================= -->
@@ -38,8 +39,6 @@ session_start();
                 </div>
                 <div class="col-12 flex-grow-1 border rounded p-2 mb-3 overflow-auto" id="col2">
                     <?php
-                    include('database.php');
-
                     $query = "SELECT name,message,date FROM messages ORDER BY date ASC";
                     $result = $conn->query($query);
 
@@ -58,7 +57,7 @@ session_start();
 
                 <!-- MSG BOTTOM ROW ======================================= -->
                 <div class="col-12" id="col3">
-                    <form class=" d-flex flex-row" method="POST" action="./function/send.php">
+                    <form class="d-flex flex-row" method="POST" action="./function/send.php">
                         <input type="text" class="form-control me-2" id="message_box" placeholder="Type a message..."
                             aria-label="Message input" name="message">
                         <input type="submit" name="send" class="btn btn-primary" id="send_button">
@@ -67,12 +66,13 @@ session_start();
             </div>
         </div>
 
-
-        <!-- RIGHT COLUMN ======================================= -->
-        <div class="col-4 p-4 justify-content-center">
+        <!-- RIGHT COLUMN mobile toggle ======================================= -->
+        <button class="btn btn-primary hamburger-btn d-lg-none" id="toggleUsers">
+            Users
+        </button>
+        <div class="col-4 p-4 users-column d-none d-lg-block" id="usersColumn">
             <h5 class="text-center mb-3">Users</h5>
-
-            <table class="table table-bordered table-striped d-flex justify-content-center">
+            <table class="table table-bordered table-striped">
                 <tbody>
                     <?php
                     $query = "SELECT name FROM user";
@@ -89,11 +89,9 @@ session_start();
                             } else {
                                 echo "<td></td>";
                             }
-
                             echo "</tr>";
                         }
                     }
-
                     ?>
                 </tbody>
             </table>
@@ -101,8 +99,13 @@ session_start();
     </div>
 
     <script src="bootstrap/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('toggleUsers').addEventListener('click', function() {
+            document.getElementById('usersColumn').classList.toggle('show');
+            document.getElementById('usersColumn').classList.toggle('d-none');
+        });
+    </script>
 </body>
-
 </html>
 
 <?php
