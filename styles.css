@@ -1,0 +1,31 @@
+html{
+    margin: 0;
+    padding: 0;
+}
+
+/**DEBUG=========================================================**/
+.debug{
+    border: 1px blue solid;
+}
+.debug1{
+    border: 1px red solid;
+}
+
+
+#col1{
+    flex-grow: 0.05;
+}
+#col2{
+    flex-grow: 0.8;
+}
+#col3{
+    flex-grow: 0.15;
+}
+
+/**MESSAGE====================================================== **/
+#message_box{
+    flex-grow: 0.95;
+}
+#message_button{
+    flex-grow: 0.05;
+}
