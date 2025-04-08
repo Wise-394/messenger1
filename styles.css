@@ -1,31 +1,49 @@
-html{
+html {
     margin: 0;
     padding: 0;
 }
 
 /**DEBUG=========================================================**/
-.debug{
+.debug {
     border: 1px blue solid;
 }
-.debug1{
+.debug1 {
     border: 1px red solid;
 }
 
-
-#col1{
+#col1 {
     flex-grow: 0.05;
 }
-#col2{
+#col2 {
     flex-grow: 0.8;
+    max-height: 75vh;
+    overflow-y: auto; /* Enable scrolling */
 }
-#col3{
+#col3 {
     flex-grow: 0.15;
 }
 
-/**MESSAGE====================================================== **/
-#message_box{
-    flex-grow: 0.95;
-}
-#message_button{
+/**MESSAGE======================================================**/
+#message_button {
     flex-grow: 0.05;
+}
+
+.message {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+#message_box {
+    flex-grow: 1;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+/* Style the send button */
+#send_button {
+    border-radius: 20px;
+    padding: 10px 20px;
 }

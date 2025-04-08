@@ -2,72 +2,109 @@
 <html lang="en">
 <?php
 include 'database.php';
-//TEST
+session_start();
 ?>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <!--MAINDIV ======================================= -->
+    <!-- MAINDIV ======================================= -->
     <div class="min-vh-100 d-flex flex-row">
-         <!--LEFT COLUMN ======================================= -->
-        <div class="col-4 debug">
-            <a class="btn btn-primary" href="index.php  ">Logout</a>
+
+        <!-- LEFT COLUMN ======================================= -->
+        <div class="col-4 p-4 border-end">
+            <a class="btn btn-danger mb-3" href="./function/logout.php">Logout</a>
+
             <?php
-            session_start();
-            if ($_SESSION["name"] == "admin") {
-                echo '<a class = "btn btn-primary" href = "register.php">Register</a>';
+            if ($_SESSION["name"] === "admin") {
+                echo '<a class="btn btn-success mb-3" href="register.php">Register</a>';
             }
             ?>
+            <br>
+            <p>Current logged in: <?php echo $_SESSION['name'] ?></p>
         </div>
-         <!--MID COLUMN ======================================= -->
-        <div class="col-4 debug">
-            <div class="d-flex flex-column debug1 min-vh-100">
-                <!--MSG TOP ROW ======================================= -->
-                <div class="debug col-12 d-flex justify-content-center" id="col1">MESSAGES</div>
-                <!--MSG MID ROW ======================================= -->
-                <div class="debug col-12" id="col2">test</div>
-                <!--MSG BOTTOM ROW ======================================= -->
-                <div class="debug col-12 d-flex flex-row" id="col3">
-                    <div class="d-flex" id="message_box"> </div>
-                    <div class="d-flex" id="message_button"> 
-                        <a href = "" class = "btn btn-primary" id ="send_button">send</a>
-                    </div>
+
+        <div class="col-12 col-md-6 col-lg-4 p-3 d-flex flex-column min-vh-100 border-end">
+            <div class="d-flex flex-column min-vh-100">
+                <!-- MSG TOP ROW ======================================= -->
+                <div class="col-12 d-flex justify-content-center mb-3" id="col1">
+                    <h5>Messages</h5>
+                </div>
+                <div class="col-12 flex-grow-1 border rounded p-2 mb-3 overflow-auto" id="col2">
+                    <?php
+                    include('database.php');
+
+                    $query = "SELECT name,message,date FROM messages ORDER BY date ASC";
+                    $result = $conn->query($query);
+
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<div class="message mb-2">';
+                            echo '<strong>' . htmlspecialchars($row['name']) . ':</strong> ';
+                            echo htmlspecialchars($row['message']);
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "No messages found.";
+                    }
+                    ?>
+                </div>
+
+                <!-- MSG BOTTOM ROW ======================================= -->
+                <div class="col-12" id="col3">
+                    <form class=" d-flex flex-row" method="POST" action="./function/send.php">
+                        <input type="text" class="form-control me-2" id="message_box" placeholder="Type a message..."
+                            aria-label="Message input" name="message">
+                        <input type="submit" name="send" class="btn btn-primary" id="send_button">
+                    </form>
                 </div>
             </div>
         </div>
-        <!--RIGHT COLUMN ======================================= -->
-        <div class="col-4 debug justify-content-center">
-            <table class="d-flex justify-content-center">
-                <th> Name </th>
-                <?php
-                $query = "SELECT name FROM user";
-                $result = $conn->query($query);
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "
-                            <tr>
-                                <td>{$row['name']}
-                            <tr>";
+
+        <!-- RIGHT COLUMN ======================================= -->
+        <div class="col-4 p-4 justify-content-center">
+            <h5 class="text-center mb-3">Users</h5>
+
+            <table class="table table-bordered table-striped d-flex justify-content-center">
+                <tbody>
+                    <?php
+                    $query = "SELECT name FROM user";
+                    $result = $conn->query($query);
+
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>
+                                    <td>" . $row['name'] . "</td>";
+                            if ($_SESSION["name"] === "admin" && $_SESSION["name"] !== $row['name'] || $_SESSION["name"] === $row['name']) {
+                                if ($_SESSION["name"] !== "admin" || $_SESSION["name"] !== $row['name']) {
+                                    echo "<td><a class='btn btn-danger btn-sm' href='./function/delete.php?name=" . urlencode($row['name']) . "'>Delete</a></td>";
+                                }
+                            } else {
+                                echo "<td></td>";
+                            }
+
+                            echo "</tr>";
+                        }
                     }
-                } else {
-                    echo "";
-                }
-                ?>
+
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>
+
     <script src="bootstrap/bootstrap.min.js"></script>
 </body>
 
 </html>
+
 <?php
-$conn->close()
-    ?>
+$conn->close();
+?>
