@@ -19,22 +19,22 @@ session_start();
 
         <!-- LEFT COLUMN ======================================= -->
         <div class="col-4 p-4 border-end">
-            <a class="btn btn-danger mb-3" href="./function/logout.php">Logout</a>
-
-            <?php
-            if ($_SESSION["name"] === "admin") {
-                echo '<a class="btn btn-success mb-3" href="register.php">Register</a>';
-            }
-            ?>
-            <br>
-            <p>Current logged in: <?php echo $_SESSION['name'] ?></p>
         </div>
 
         <div class="col-12 col-md-6 col-lg-4 p-3 d-flex flex-column min-vh-100 border-end">
             <div class="d-flex flex-column min-vh-100">
                 <!-- MSG TOP ROW ======================================= -->
-                <div class="col-12 d-flex justify-content-center mb-3" id="col1">
-                    <h5>Messages</h5>
+                <div class="d-flex justify-content-between">
+                    <a class="btn btn-danger mb-3" href="./function/logout.php">Logout</a>
+                    <div class="text-center mb-3" id="col1">
+                        <h5>Messages</h5>
+                        <p class="text-muted mb-0">Current logged in: <?php echo $_SESSION['name'] ?></p>
+                    </div>
+                    <?php
+                    if ($_SESSION["name"] === "admin") {
+                        echo '<a class="btn btn-success mb-3" href="register.php">Register</a>';
+                    }
+                    ?>
                 </div>
                 <div class="col-12 flex-grow-1 border rounded p-2 mb-3 overflow-auto" id="col2">
                     <?php

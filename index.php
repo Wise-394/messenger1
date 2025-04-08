@@ -14,7 +14,8 @@ include "database.php";
 
 <body>
 
-    <div class="min-vh-100 justify-content-center d-flex align-items-center">
+    <div class="min-vh-100 justify-content-center d-flex align-items-center flex-column">
+        <h1 style = "color: blue";>MESSENGER</h1>
         <div class="debug p-3">
             <form class="d-flex flex-column" action="" method="POST">
                 <label> Username </label>
