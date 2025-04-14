@@ -29,7 +29,7 @@ session_start();
                     <a class="btn btn-danger mb-3" href="./function/logout.php">Logout</a>
                     <div class="text-center mb-3" id="col1">
                         <h5>Messages</h5>
-                        <p class="text-muted mb-0">Current logged in: <?php echo $_SESSION['name'] ?></p>
+                        <p class="text-muted mb-0">Currently logged in: <?php echo $_SESSION['name'] ?></p>
                     </div>
                     <?php
                     if ($_SESSION["name"] === "admin") {
